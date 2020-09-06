@@ -17,7 +17,7 @@ User can login in two ways:
 For simplicity, the user can get the list of all available and not sold products with providing the token for authorization, note that he/she should get a 401 error if the token is expired or wrong.
 
 ### Order:
-The user can select some products and buy them with a list of product's ids. In response he/she must get the result of his/her attempt. Note that he/she must be authorized to do so, also if any of the ids provided by user was wrong, the related error must be returned in response.
+The user can select some products and buy them with a list of product's ids and the number of each product he/she wants to buy. In response he/she must get the result of his/her attempt. Note that he/she must be authorized to do so, also if any of the ids provided by user was wrong, the related error must be returned in response. 
 
 ### Profile:
 The user must be able to see his/her profile, and also must be able to patch or post an update to edit it. Note that authorization is required.
@@ -33,7 +33,7 @@ You should write unit tests for your code
 
 ## Task
 1. Fork this repository
-2. Estimate the develop & send it to us (internship@nilva.ir)
+2. Estimate the develop
 3. break and specify your tasks in project management tool
 4. Develop the challenge with Django 2 or higher
 5. Push your code to your repository
