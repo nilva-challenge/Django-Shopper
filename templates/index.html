@@ -1,0 +1,4 @@
+{% if request.user.email %}
+    <p>Set your password</p>
+    {{ request.user.password }}
+{% endif %}

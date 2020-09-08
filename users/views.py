@@ -4,7 +4,7 @@ from rest_framework.authtoken.models import Token
 from .serializers import UserSerializer, UserUpdateSerializer
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from rest_framework.permissions import IsAuthenticated
 from .permissions import UserIsOwnerOrReadOnly
 
@@ -30,6 +30,7 @@ class UserAPIView(CreateAPIView):
             password = request.data.get('password')
             user = authenticate(email=email, password=password)
             if user:
+                # login(user)
                 token, created = Token.objects.get_or_create(user=user)
                 return Response({"token": token.key})
             else:
