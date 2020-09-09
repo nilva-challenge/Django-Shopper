@@ -12,7 +12,7 @@ from django_shopper import settings
 @api_view(['POST'])  # this method  works with post
 @permission_classes([AllowAny, ])  # any body can access to this method
 def authenticate_user(request):
-    """Create token for next steps"""
+    """Create token for next steps(Login)"""
     try:
         email = request.data['email']
         password = request.data['password']
