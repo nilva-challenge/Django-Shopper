@@ -60,7 +60,6 @@ class GoogleLogin(SocialLoginView):
 
 
 def google_callback(request):
-    print(request.GET)
     params = urllib.parse.urlencode(request.GET)
     print("-------------------------------------------")
     print(params)
