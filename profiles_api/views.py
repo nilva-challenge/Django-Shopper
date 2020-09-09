@@ -7,6 +7,9 @@ from rest_framework.response import Response
 from rest_framework import status
 import jwt
 from django_shopper import settings
+from .serializers import UserProfileSerializer
+
+from django.contrib.auth.hashers import make_password
 
 
 @api_view(['POST'])  # this method  works with post
@@ -20,22 +23,48 @@ def authenticate_user(request):
             res = {'خطا': 'ایمیل و پسورد نمی توانند خالی باشند.'}
             return Response(res, status=status.HTTP_403_FORBIDDEN)
 
-        user = UserProfile.objects.get(email=email)
-        if user.check_password(password):
-            try:
-                payload = jwt_payload_handler(user)
-                token = jwt.encode(payload, settings.SECRET_KEY)
-                user_details = {}
-                user_details['user'] = user.email
-                user_details['token'] = token
-                user_logged_in.send(sender=user.__class__, request=request, user=user)
-                return Response(user_details, status=status.HTTP_200_OK)
+        user = UserProfile.objects.filter(email=email)
+        if user.exists():
+            if user[0].check_password(password):
+                user = user[0]
+                try:
+                    payload = jwt_payload_handler(user)
+                    token = jwt.encode(payload, settings.SECRET_KEY)
+                    user_details = {}
+                    user_details['user'] = user.email
+                    user_details['token'] = token
+                    user_logged_in.send(sender=user.__class__, request=request, user=user)
+                    return Response(user_details, status=status.HTTP_200_OK)
 
-            except Exception as e:
-                raise e
+                except Exception as e:
+                    raise e
+            else:
+                res = {'خطا': 'ایمیل و پسورد را صحیح وارد کنید.'}
+                return Response(res)
         else:
-            res = {'error': 'can not authenticate with the given credentials or the account has been deactivated'}
-            return Response(res, status=status.HTTP_403_FORBIDDEN)
+            result = create_user(request)
+
+            if result == 1:
+                res = {'پیغام': 'ثبت نام شما با موفقیت انجام شد.'}
+                return Response(res, status=status.HTTP_200_OK)
+            else:
+                res = {'پیغام': 'با خطا مواجه شده اید.'}
+                return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     except KeyError:
         res = {'خطا': 'افزودن فیلد های ایمیل و پسورد اجباری می باشند.'}
         return Response(res)
+
+
+@permission_classes([AllowAny, ])  # any body can access to this method
+def create_user(request):
+    try:
+        serializer_class = UserProfileSerializer
+        serializer = serializer_class(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data.get('email')
+            password = serializer.validated_data.get('password')
+            UserProfile.objects.create_user(email=email, password=(password))
+            return 1
+    except:
+        return 0
