@@ -9,8 +9,6 @@ import jwt
 from django_shopper import settings
 from .serializers import UserProfileSerializer
 
-from django.contrib.auth.hashers import make_password
-
 
 @api_view(['POST'])  # this method  works with post
 @permission_classes([AllowAny, ])  # any body can access to this method
@@ -58,6 +56,7 @@ def authenticate_user(request):
 
 @permission_classes([AllowAny, ])  # any body can access to this method
 def create_user(request):
+    """method for register that  is called in auth_token method"""
     try:
         serializer_class = UserProfileSerializer
         serializer = serializer_class(data=request.data)
