@@ -7,6 +7,13 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from rest_framework.permissions import IsAuthenticated
 from .permissions import UserIsOwnerOrReadOnly
+from allauth.socialaccount.providers.google import views as google_views
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from django.urls import reverse
+from dj_rest_auth.registration.views import SocialLoginView
+
+from django.shortcuts import redirect
+import urllib.parse
 
 from django.contrib.auth import get_user_model
 
@@ -30,7 +37,7 @@ class UserAPIView(CreateAPIView):
             password = request.data.get('password')
             user = authenticate(email=email, password=password)
             if user:
-                # login(user)
+                login(request, user)
                 token, created = Token.objects.get_or_create(user=user)
                 return Response({"token": token.key})
             else:
@@ -40,6 +47,25 @@ class UserAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(password=make_password(self.request.data.get('password')))
+
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = google_views.GoogleOAuth2Adapter
+    # callback_url = 'http://localhost:8000/api/users/auth/google/login/callback/'
+    client_class = OAuth2Client
+
+    @property
+    def callback_url(self):
+        return self.request.build_absolute_uri(reverse('google_callback'))
+
+
+def google_callback(request):
+    print(request.GET)
+    params = urllib.parse.urlencode(request.GET)
+    print("-------------------------------------------")
+    print(params)
+    print("-------------------------------------------")
+    return redirect(f'https://frontend/auth/google?{params}')
 
 
 class UserUpdateAPIView(RetrieveUpdateAPIView):
