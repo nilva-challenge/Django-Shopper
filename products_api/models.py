@@ -22,4 +22,4 @@ class Order(models.Model):
     order_date = models.DateTimeField(default=datetime.now, blank=False, null=False)
 
     def __str__(self):
-        return self.product
+        return f'{self.product} - {self.count} counts'
