@@ -4,7 +4,7 @@ Postman API
 -you are provided by a postman collection
 1.http://localhost/api/ for login and signup
 2.http://localhost/api/products/ for seeing the products
-3.http://localhost/api/profile/ for seeing your profile
+3.http://localhost/api/profile/ for seeing and updating your profile
 4.http://localhost/api/order/ for ordering products by providing ids and number of them
 
 
