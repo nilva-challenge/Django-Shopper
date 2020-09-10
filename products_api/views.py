@@ -8,3 +8,8 @@ class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     permission_classes = (permissions.AdminUpdateProduct,)
 
+
+
+
+
+
