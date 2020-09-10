@@ -109,6 +109,10 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"your new email\"\r\n}"
+				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/api/profile/",
 					"protocol": "http",
