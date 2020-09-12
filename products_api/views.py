@@ -8,7 +8,7 @@ from rest_framework import status
 import itertools as it
 from django.db import transaction
 from profiles_api.models import User
-from django_shopper.messages import errors
+from django_shopper.messages import errors,success
 
 
 class ProductViewSet(ModelViewSet):
@@ -111,6 +111,9 @@ def ordering(request):
 
     except Exception as e:
         pass
-    res = {'پیغام': 'سفارش شما با موفقیت ثبت شد.'}
-
-    return Response(res, status.HTTP_200_OK)
+    code = 201
+    success = {
+        'code': code,
+        'msg': errors[code]
+    }
+    return Response(success, status=status.HTTP_200_OK)
