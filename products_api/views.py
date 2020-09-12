@@ -8,7 +8,7 @@ from rest_framework import status
 import itertools as it
 from django.db import transaction
 from profiles_api.models import User
-from django_shopper.messages import errors,success
+from django_shopper.messages import errors, success
 
 
 class ProductViewSet(ModelViewSet):

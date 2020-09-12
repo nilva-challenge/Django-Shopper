@@ -14,8 +14,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 'style': {
                     'input_type': 'password'
                 }},  # when read dont show password
-            'email': {
-                'read_only': True,  # do not permit to change email
-
-            }
+            # 'email': {
+            #     'read_only': True,  # do not permit to change email
+            #
+            # }
         }  # convert model instance into python object with serializer

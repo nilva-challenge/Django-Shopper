@@ -43,15 +43,7 @@ def authenticate_user(request):
             except Exception as e:
                 raise e
         else:  # if email user there is not in database,it will be created..
-            result = create_user(request)
-            if result == 1:
-                code = 201
-                success_msg = {
-                    'code': code,
-                    'msg': success[code]
-                }
-                return Response(success_msg, status=status.HTTP_201_CREATED)
-            elif result == 2:
+            if len(User.objects.filter(email=email)) > 0:
                 code = 105
                 error = {
                     'code': code,
@@ -59,13 +51,28 @@ def authenticate_user(request):
                 }
                 return Response(error, status.HTTP_400_BAD_REQUEST)
             else:
-                code = 104
-                error = {
-                    'code': code,
-                    'msg': errors[code]
-                }
-                return Response(error, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+                result = create_user(request)
+                if result == 1:
+                    code = 201
+                    success_msg = {
+                        'code': code,
+                        'msg': success[code]
+                    }
+                    return Response(success_msg, status=status.HTTP_201_CREATED)
+                elif result == 2:
+                    code = 105
+                    error = {
+                        'code': code,
+                        'msg': errors[code]
+                    }
+                    return Response(error, status.HTTP_400_BAD_REQUEST)
+                else:
+                    code = 104
+                    error = {
+                        'code': code,
+                        'msg': errors[code]
+                    }
+                    return Response(error, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     except KeyError:
         code = 104
         error = {
