@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "54d6d06d-ceb1-449d-820e-a0a2e447b15c",
+		"name": "Django-Shopper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth_token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Au",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"arezoo@gmail.com\",\n    \"password\": \"123456789\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/user/auth_token/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"auth_token",
+						""
+					]
+				},
+				"description": "this method for create token for authorization"
+			},
+			"response": []
+		},
+		{
+			"name": "list of products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxOSwidXNlcm5hbWUiOiJhcmV6b29AZ21haWwuY29tIiwiZXhwIjoxNTk5OTIyNzcxLCJlbWFpbCI6ImFyZXpvb0BnbWFpbC5jb20ifQ.U_4sBbfxkapqyUm6_MhDdck7kbr-3hIT_4LZfbKmabs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/products/list/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						"list",
+						""
+					]
+				},
+				"description": "see all of product when user log in//\n\n\nadmin can edit product"
+			},
+			"response": []
+		},
+		{
+			"name": "users list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6ImFsaUBnbWFpbC5jb20iLCJleHAiOjE1OTk5MjM2NzksImVtYWlsIjoiYWxpQGdtYWlsLmNvbSJ9._Mt-WIvkslMz81ny1Fr4aPmHGF_4r_I5BDEQ5gzqCHg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/user/profile/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"profile",
+						""
+					]
+				},
+				"description": "admin user can see list of products"
+			},
+			"response": []
+		},
+		{
+			"name": "ordering",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJ1c2VybmFtZSI6ImttQGdtYWlsLmNvbSIsImV4cCI6MTU5OTg1Nzc1NiwiZW1haWwiOiJrbUBnbWFpbC5jb20ifQ.IB4UbW0_ZiTS-feC4qHdUAyDLN1M1AOon1zl1O8m7Nk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n    \"products\": [\n         {\n            \"id\": 1,\n            \"count\": 1\n        }\n    \n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/products/order/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						"order",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user profile edit",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxOSwidXNlcm5hbWUiOiJhcmV6b29AZ21haWwuY29tIiwiZXhwIjoxNTk5OTIyNDgwLCJlbWFpbCI6ImFyZXpvb0BnbWFpbC5jb20ifQ.DuJP-nB8g6mQwudB2v8wTZDKBLUrfYxRistpixxX710",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\":\"arezoo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/user/profile/19/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"profile",
+						"19",
+						""
+					]
+				},
+				"description": "every user that login can edit her/his profile"
+			},
+			"response": []
+		},
+		{
+			"name": "user profile info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxOSwidXNlcm5hbWUiOiJhcmV6b29AZ21haWwuY29tIiwiZXhwIjoxNTk5OTIyNDgwLCJlbWFpbCI6ImFyZXpvb0BnbWFpbC5jb20ifQ.DuJP-nB8g6mQwudB2v8wTZDKBLUrfYxRistpixxX710",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/user/profile/19/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"profile",
+						"19",
+						""
+					]
+				},
+				"description": "every user can see his/her profile"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
