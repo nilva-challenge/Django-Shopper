@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Order
+from .models import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -8,11 +8,3 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'count', 'price']
-
-
-class OredrSerializer(serializers.ModelSerializer):
-    """Create serializer for order to convert data model into python json"""
-
-    class Meta:
-        model = Order
-        fields = ['user', 'product', 'count']
