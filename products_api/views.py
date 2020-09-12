@@ -12,6 +12,7 @@ from django_shopper.messages import errors,success
 
 
 class ProductViewSet(ModelViewSet):
+    """Create product class for see list product or update and ..."""
     serializer_class = ProductSerializer
     queryset = Product.objects.filter(available=True)
     permission_classes = (permissions.AdminUpdateProduct,)
