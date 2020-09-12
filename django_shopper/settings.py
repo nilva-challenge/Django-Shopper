@@ -93,26 +93,26 @@ AUTHENTICATION_BACKENDS = [
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 # setting of postgres database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shopper_db',
-        'USER': 'nilva',
-        'PASSWORD': 'nilva',
-        'HOST': 'shopper_postgresql',
-        'PORT': '5432'
-    }
-}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'shopper_db',
-#         'USER': 'postgres',
-#         'PASSWORD': '8812621012',
-#         'HOST': '127.0.0.1',
+#         'USER': 'nilva',
+#         'PASSWORD': 'nilva',
+#         'HOST': 'shopper_postgresql',
 #         'PORT': '5432'
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'shopper_db',
+        'USER': 'postgres',
+        'PASSWORD': '8812621012',
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

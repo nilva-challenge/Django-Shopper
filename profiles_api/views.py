@@ -8,7 +8,7 @@ from rest_framework import status
 import jwt
 from django_shopper import settings
 from .serializers import UserProfileSerializer
-from .permissions import IsOwner, IsSuperUser
+from .permissions import IsOwner, IsSuperUser, General
 from rest_framework import viewsets
 from rest_framework import filters
 from django_shopper.messages import success, errors
@@ -110,6 +110,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsSuperUser, ]
         elif self.action == 'retrieve':
             self.permission_classes = [IsOwner]
+        else:
+            self.permission_classes = [General]
         return super(self.__class__, self).get_permissions()
 
     filter_backends = (filters.SearchFilter,)  # in browser there is filter base on name and email in list ,and admin user has permission to see list of product

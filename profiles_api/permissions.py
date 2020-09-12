@@ -19,3 +19,6 @@ class IsOwner(permissions.BasePermission):
                 return obj.id == request.user.id
         else:
             return False
+class General(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return False
