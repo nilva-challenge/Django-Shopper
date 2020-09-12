@@ -1,0 +1,3 @@
+POSTGRES_USER=nilva
+POSTGRES_PASSWORD=nilva
+POSTGRES_db=shopper_db

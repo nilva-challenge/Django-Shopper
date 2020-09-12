@@ -39,3 +39,29 @@ You should write unit tests for your code
 5. Push your code to your repository
 6. Send us a pull request, we will review and get back to you
 7. Enjoy 
+
+
+
+
+
+
+
+
+
+
+
+## Run project 
+
+docker volume  create shopper_postgresql
+docker network  create shopper_network
+docker network  create ngnix_network
+docker-compose up  -d
+docker exec -it shopper_postgresql psql -U nilva -W nilva
+CREATE DATABASE shopper_db;
+
+
+docker exec -it django-shopper_shopper_1  python manage.py migrate
+
+
+
+run project in http://127.0.0.1:8000/

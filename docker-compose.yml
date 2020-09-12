@@ -1,0 +1,39 @@
+version: "3"
+services:
+  shopper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/django_shopper
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - shopper_network
+      - ngnix_network
+    depends_on:
+      - shopper_postgresql
+
+  shopper_postgresql:
+    image: postgres:12
+    container_name: shopper_postgresql
+    volumes:
+      - shopper_postgresql:/var/lib/postgresql/data
+    restart: always
+    env_file: .file_info
+    ports:
+      - "5432:5432"
+    networks:
+      - shopper_network
+
+volumes:
+  shopper_postgresql:
+    external: true
+
+networks:
+  shopper_network:
+    external: true
+  ngnix_network:
+    external: true
+
