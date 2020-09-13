@@ -8,11 +8,14 @@ class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=8, write_only=True)
 
     def create(self, validated_data):
+        # Checks if the user with the email exists
         try:
             user = User.objects.get(email=validated_data['email'])
+            # Checks the password
             if not user.check_password(validated_data['password']):
                 raise serializers.ValidationError('password is incorrect')
         except User.DoesNotExist:
+            # Creates the User if the email doesnt exist in database
             user = User.objects.create_user(username=validated_data['email'], email=validated_data['email'],
                                             password=validated_data['password'])
         return user

@@ -19,7 +19,9 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Regular Authentication with Token
     path('users/', include('accounts.urls')),
+    # Google Authentication with allauth api
     path('accounts/', include('allauth.urls')),
     path('products/', include('products.urls'))
 ]
