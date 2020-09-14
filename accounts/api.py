@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 
@@ -6,8 +7,30 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
+from google.auth.transport import requests
+from google.oauth2 import id_token
+
 from accounts.serializers import LoginSerializer
 from accounts.utils import get_user, User
+
+
+class GoogleLoginAPI(APIView):
+    """
+    Login with information sent back from google!
+    """
+    def post(self, *args, **kwargs):
+        client_id = settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+        idinfo = id_token.verify_oauth2_token(self.request.data['code'], requests.Request(), client_id)
+
+        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+            raise ValueError('Wrong issuer.')
+
+        user = get_user(idinfo.get('email'))
+        if user is None: 
+            user = User.objects.create(email=idinfo.get('email'))
+            user.save()
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key}, status=status.HTTP_200_OK)
 
 
 class LoginAPI(APIView):

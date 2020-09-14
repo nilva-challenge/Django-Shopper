@@ -135,3 +135,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '244810539298-nmbmqnihf67tpf0m4erk5m77cuk3bug7.apps.googleusercontent.com'
+
