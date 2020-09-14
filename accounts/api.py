@@ -1,17 +1,21 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 
 from google.auth.transport import requests
 from google.oauth2 import id_token
 
-from accounts.serializers import LoginSerializer
+from accounts.serializers import LoginSerializer, ProfileSerializer
 from accounts.utils import get_user, User
+from accounts.models import Profile
 
 
 class GoogleLoginAPI(APIView):
@@ -62,3 +66,28 @@ class LoginAPI(APIView):
             return Response({"token": token.key}, status=status.HTTP_200_OK)
         else:
             return Response({"password": ["Password is not correct.", ]}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class ProfileAPI(GenericAPIView):
+    permission_classes = [IsAuthenticated,]
+    serializer_class = ProfileSerializer
+
+    def get_queryset(self, **kwargs):
+        return get_object_or_404(Profile, user=self.request.user)
+    
+    def get(self, *args, **kwargs):
+        data = self.serializer_class(instance=self.get_queryset()).data
+        return Response(data=data, status=status.HTTP_200_OK)
+    
+    def put(self, *args, **kwargs):
+        serializer = self.get_serializer(self.get_queryset(), data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    
+    def patch(self, *args, **kwargs):
+        serializer = self.get_serializer(self.get_queryset(), data=self.request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
