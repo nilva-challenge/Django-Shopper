@@ -18,3 +18,23 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+
+class Profile(models.Model):
+    """
+    User's Profile Model
+    """
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    fullname = models.CharField(max_length=128, blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
+
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        if self.fullname:
+            return self.fullname
+        else:
+            return self.user.email
