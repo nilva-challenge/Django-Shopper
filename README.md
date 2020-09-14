@@ -25,17 +25,13 @@ The user must be able to see his/her profile, and also must be able to patch or 
 ## Expectations:
 We want a clean, readable and maintainable code with meaningful comments and docstrings. Also you need to provide postman API doc for web app. For task managing, you have to break your work to smaller and manageable tasks, and put them on a task managing app, specified by your mentor.
 
-## Estimation
-You have to estimate the development time and send us your estimation number and how you obtained it. 
-
 ## Tests
 You should write unit tests for your code
 
 ## Task
 1. Fork this repository
-2. Estimate the develop
-3. break and specify your tasks in project management tool
-4. Develop the challenge with Django 2 or higher
-5. Push your code to your repository
-6. Send us a pull request, we will review and get back to you
-7. Enjoy 
+2. break and specify your tasks in project management tool
+3. Develop the challenge with Django 2 or higher
+4. Push your code to your repository
+5. Send us a pull request, we will review and get back to you
+6. Enjoy 
