@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 
 from google.auth.transport import requests
@@ -37,7 +37,8 @@ class GoogleLoginAPI(APIView):
         return Response({'token': token.key}, status=status.HTTP_200_OK)
 
 
-class LoginAPI(APIView):
+class LoginAPI(GenericAPIView):
+    permission_classes = [AllowAny,]
     def post(self, *args, **kwargs):
         """
         Authenticates and existing user or creates an account first if email does not exist.
