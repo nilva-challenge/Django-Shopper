@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from myapp.models import Product, Order
@@ -80,3 +80,11 @@ def ApiOrder(request):
             return Response({'error': 'probably problem in count parameter'})
     else:  # more like bad request again but explaining more details in json instead of raising error number.(400.6)
         return Response({'error': 'probably problem in product id parameter'})
+
+
+def SocialToken(request):
+    username = request.user.username
+    query = User.objects.filter(username=str(username)).first()
+    user = query.id
+    token,created = Token.objects.get_or_create(user_id=user)
+    return JsonResponse({'token':str(token)})
