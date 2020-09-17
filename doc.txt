@@ -1,0 +1,90 @@
+127.0.0.1:8000/api-token-auth/
+
+[POST]
+
+username : your username
+password : your password
+
+return type example
+
+{
+    "token": "c1f3e1e93acaa76dea624f6049f393f115ad123b"
+}
+
+
+
+http://127.0.0.1:8000/login/
+
+API FORM
+[POST]
+email : your email
+password : your password
+
+
+WEB PAGE google auth ( browser form)
+http://127.0.0.1:8000/
+
+sign in with google email ...
+
+after successfull login getting your token with
+http://127.0.0.1:8000/social_token/
+
+return type example
+
+{
+    "token": "c1f3e1e93acaa76dea624f6049f393f115ad123b"
+}
+
+
+http://127.0.0.1:8000/profile/
+
+adding this to header
+
+Authorization: token c1f3e1e93acaa76dea624f6049f393f115ad123b
+
+[GET]
+recieving first name and last name
+[POST]
+first_name : your new first name for update
+last_name : your new last name for update
+
+http://127.0.0.1:8000/product
+
+[GET]
+
+adding this to header
+
+Authorization: token c1f3e1e93acaa76dea624f6049f393f115ad123b
+
+return type example
+
+[
+    {
+        "id": 1,
+        "product_name": "Product1",
+        "available": 4
+    },
+    {
+        "id": 2,
+        "product_name": "Product2",
+        "available": 6
+    }
+]
+
+http://127.0.0.1:8000/order/
+
+[POST]	
+
+adding this to header
+
+Authorization: token c1f3e1e93acaa76dea624f6049f393f115ad123b
+count : Your int count
+product_id : your product id  from last API
+***	count is optional
+return type example
+
+{"response":"order1has been successfully created"}
+
+
+
+
