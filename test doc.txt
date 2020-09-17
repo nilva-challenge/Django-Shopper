@@ -1,0 +1,42 @@
+unit test with POSTMAN
+
+- creating dumb users,products and every model and fields
+- POST 127.0.0.1:8000/api-token-auth/ checking token generation
+EXP: token json response
+- POST http://127.0.0.1:8000/login/checking with right user,pass
+EXP: pass
+- POST http://127.0.0.1:8000/login/checking with false user,pass
+EXP: error
+- POST http://127.0.0.1:8000/login/checking with user only
+EXP: error
+- GET http://127.0.0.1:8000/profile/ checking without token
+EXP: error
+- GET http://127.0.0.1:8000/profile/ checking with token
+EXP: first name,last name json response
+- GET http://127.0.0.1:8000/product checking without token
+EXP: error
+- GET http://127.0.0.1:8000/product checking with token
+EXP: product list json response
+- GET http://127.0.0.1:8000/order/checking without token
+EXP: error
+- POST http://127.0.0.1:8000/order/checking with token
+EXP:error 
+- POST http://127.0.0.1:8000/order/checking with token,count,product_id
+EXP: if count <= available in product list:
+		-> pass
+	if count > available in product list:
+		->error
+	if wrong product id:
+		->error
+	
+
+WEB PAGE TEST
+
+-	http://127.0.0.1:8000
+EXP:	html link google login
+		- after login
+				- 127.0.0.1:8000/social_token
+					EXP: token json response
+
+
+
