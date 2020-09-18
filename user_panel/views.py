@@ -21,7 +21,7 @@ def get_tokens_for_user(user):
 
 
 class UserLoginApiView(generics.CreateAPIView):
-    """User login"""
+    """User login API endpoint"""
     serializer_class = serializers.UserSerializer
     queryset = get_user_model().objects.all()
 
