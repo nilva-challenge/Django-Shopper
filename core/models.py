@@ -4,12 +4,14 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+
 def validate_positive_float(value):
     if value < 0:
         raise ValidationError(
             _('%(value)s is lower than zero'),
             params={'value': value},
         )
+
 
 class UserManager(BaseUserManager):
 
@@ -63,7 +65,11 @@ class Order(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.email
+        return f'{self.id}, {self.user.email}'
+
+    @property
+    def order_items(self):
+        return self.orderitem_set.all()
 
 
 class OrderItem(models.Model):

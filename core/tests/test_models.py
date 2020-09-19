@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from core import models
 
+
 def sample_user(email="mr.amirhossein1836@gmail.com", password="Pass.123"):
     return get_user_model().objects.create_user(email, password)
 
@@ -61,7 +62,7 @@ class ModelTests(TestCase):
             price=0
         )
 
-        self.assertEqual(str(order), order.user.email)
+        self.assertEqual(str(order), f'{order.id}, {order.user.email}')
 
     def test_order_item_str(self):
         """Test the order item string representation"""
