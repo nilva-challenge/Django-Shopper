@@ -6,6 +6,7 @@ from rest_framework import status
 from . import serializers
 import requests
 from core import models
+import json
 from django.shortcuts import get_object_or_404
 
 
@@ -39,8 +40,11 @@ class OrderCreateViewSet(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         data = request.data
+        print(request.data)
         data_items = data['products']
         products = []
+
+        print(json.loads(data_items))
 
         # check product id is available and check quantity must be more than 0
         for product in data_items:
