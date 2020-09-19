@@ -1,9 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
-
+def validate_positive_float(value):
+    if value < 0:
+        raise ValidationError(
+            _('%(value)s is lower than zero'),
+            params={'value': value},
+        )
 
 class UserManager(BaseUserManager):
 
@@ -37,3 +43,39 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    stock = models.PositiveIntegerField(default=0)
+    price = models.FloatField(validators=[validate_positive_float])
+
+    def __str__(self):
+        return self.name
+
+
+class Order(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    price = models.FloatField(validators=[validate_positive_float])
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.email
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE
+    )
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.order.id}, {self.product.name}'

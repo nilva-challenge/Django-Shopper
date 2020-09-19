@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django.contrib.sites',
-
 ]
 
 REST_FRAMEWORK = {
@@ -55,6 +54,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+
+# Token settings
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
@@ -168,9 +170,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'core.User'
 
+
+# Google authentication
+
 AUTHENTICATION_BACKENDS = (
      'django.contrib.auth.backends.ModelBackend',
      'allauth.account.auth_backends.AuthenticationBackend',
+
  )
 
 SITE_ID = 2
@@ -181,6 +187,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
+
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
