@@ -48,7 +48,7 @@ class UserLoginApiView(generics.CreateAPIView):
                 )
             else:
                 res = {
-                    'error': 'The provided credentials are not valid'
+                    'message': 'The provided credentials are not valid'
                 }
                 return Response(
                     res,
@@ -59,7 +59,7 @@ class UserLoginApiView(generics.CreateAPIView):
             # check password length
             if len(password) < 8:
                 res = {
-                    'error': 'The length of password must be more than 8'
+                    'message': 'The length of password must be more than 8'
                 }
                 return Response(
                     res,

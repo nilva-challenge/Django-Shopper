@@ -1,0 +1,478 @@
+{
+	"info": {
+		"_postman_id": "13754d98-76e3-4d23-a107-0019cdaddb2a",
+		"name": "Django-Shopper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"amirhossein@gmail.com\",\n    \"password\": \"Pass.123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8000/user-panel/login/",
+				"description": "An API endpoint for login users"
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:8000/user-panel/login/",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"amirhossein@gmail.com\",\n    \"password\": \"Pass.123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/user-panel/login/"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 20 Sep 2020 16:11:35 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.8.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept"
+						},
+						{
+							"key": "Allow",
+							"value": "POST, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "441"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYwMDcwNDY5NSwianRpIjoiMjg0YTBjNWQ5NmFiNDg0NTkxMzk4OGE3YTA2ZDAxY2EiLCJ1c2VyX2lkIjo0OH0.Ew33kItzg0LLJiXhnBAuBTocUhXLoriQhuh1Ar1kT7I\",\n    \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjAwNjIxODk1LCJqdGkiOiIwNTNjNjVmYmJmMDg0OTVhYTU2MjRmYjQ0ODVmNTNlMyIsInVzZXJfaWQiOjQ4fQ.tbtz__22QaWp0Ly6CS6GCayBpkSfUb6wirAbhSYArLc\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Refresh token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYwMDcwODAwOSwianRpIjoiZjlmM2MxNDk5ZmIyNDUyOWE2M2E1MTYyMzczOWYwZTMiLCJ1c2VyX2lkIjo0OH0.QMFuSREEHFJM9r289uaQ3U6DTHdJ8L7YfvQQT7bPcMc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8000/user-panel/token/refresh/",
+				"description": "An API endpoint for refresh user token"
+			},
+			"response": [
+				{
+					"name": "Refresh token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYwMDcwODAwOSwianRpIjoiZjlmM2MxNDk5ZmIyNDUyOWE2M2E1MTYyMzczOWYwZTMiLCJ1c2VyX2lkIjo0OH0.QMFuSREEHFJM9r289uaQ3U6DTHdJ8L7YfvQQT7bPcMc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/user-panel/token/refresh/"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 20 Sep 2020 17:22:25 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.8.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept"
+						},
+						{
+							"key": "Allow",
+							"value": "POST, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "441"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjAwNjI2MTQ1LCJqdGkiOiIyODI2NjQyYzdmMzE0MDUxYjQxMTZjZTI0ZTljY2UyYiIsInVzZXJfaWQiOjQ4fQ._ujBAbLXuBu9vrWHbyMCRRcSBQCCQT61gRc2wySumF4\",\n    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYwMDcwODk0NSwianRpIjoiMTViNmVjYTU0YTM1NDliMmEyMjNmMGJhYmY0MTg0ZTIiLCJ1c2VyX2lkIjo0OH0.-9KX0XqJUM_KF8rrSmM_4xQPIO2yCzJlBFe5Nyuz73A\"\n}"
+				}
+			]
+		},
+		{
+			"name": "user info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjAwNjI1MjE3LCJqdGkiOiI2YWQzMGVkYzA5YjE0YWNlOTkwMjY5NTA5YjY4YmUwMiIsInVzZXJfaWQiOjQ4fQ.jBYKvs2JJnB9K-Hqg4e3YND3t1Vc-AaE6t7Oxk2kigU"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:8000/user-panel/me/",
+				"description": "An API enpoint to show authorized user information"
+			},
+			"response": [
+				{
+					"name": "user info",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000/user-panel/me/"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 20 Sep 2020 17:21:59 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.8.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, PUT, PATCH, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "55"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 48,\n    \"email\": \"amirhossein@gmail.com\",\n    \"name\": \"amir\"\n}"
+				}
+			]
+		},
+		{
+			"name": "update user info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjAwNjI1MjE3LCJqdGkiOiI2YWQzMGVkYzA5YjE0YWNlOTkwMjY5NTA5YjY4YmUwMiIsInVzZXJfaWQiOjQ4fQ.jBYKvs2JJnB9K-Hqg4e3YND3t1Vc-AaE6t7Oxk2kigU"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"amir\",\n    \"password\": \"Pass.987\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8000/user-panel/me/",
+				"description": "An API endpoint for update user information"
+			},
+			"response": [
+				{
+					"name": "update user info",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"amirhossein\",\n    \"password\": \"Pass.987\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/user-panel/me/"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 20 Sep 2020 17:22:16 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.8.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, PUT, PATCH, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "62"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 48,\n    \"email\": \"amirhossein@gmail.com\",\n    \"name\": \"amirhossein\"\n}"
+				}
+			]
+		},
+		{
+			"name": "List  products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjAwNjI1MjE3LCJqdGkiOiI2YWQzMGVkYzA5YjE0YWNlOTkwMjY5NTA5YjY4YmUwMiIsInVzZXJfaWQiOjQ4fQ.jBYKvs2JJnB9K-Hqg4e3YND3t1Vc-AaE6t7Oxk2kigU"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:8000/shop/products/",
+				"description": "An API endpoint for listing available products"
+			},
+			"response": [
+				{
+					"name": "List  products",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000/shop/products/"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 20 Sep 2020 17:20:37 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.8.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "107"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 2,\n        \"name\": \"note 10 plus\",\n        \"stock\": 3,\n        \"price\": 5000\n    },\n    {\n        \"id\": 3,\n        \"name\": \"s10\",\n        \"stock\": 10,\n        \"price\": 233333\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "order products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjAwNjI1MjE3LCJqdGkiOiI2YWQzMGVkYzA5YjE0YWNlOTkwMjY5NTA5YjY4YmUwMiIsInVzZXJfaWQiOjQ4fQ.jBYKvs2JJnB9K-Hqg4e3YND3t1Vc-AaE6t7Oxk2kigU"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": 2,\n        \"quantity\": 8\n    },\n    {\n        \"id\": 3,\n        \"quantity\": 4\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8000/shop/order/",
+				"description": "An API endpoint for ordering products"
+			},
+			"response": [
+				{
+					"name": "order products",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"id\": 2,\n        \"quantity\": 3\n    },\n    {\n        \"id\": 3,\n        \"quantity\": 4\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/shop/order/"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 20 Sep 2020 17:20:24 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.8.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept"
+						},
+						{
+							"key": "Allow",
+							"value": "POST, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "361"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Your order has been successfully registered\",\n    \"data\": {\n        \"id\": 4,\n        \"user\": {\n            \"id\": 48,\n            \"email\": \"amirhossein@gmail.com\",\n            \"name\": \"amir\"\n        },\n        \"order_items\": [\n            {\n                \"id\": 7,\n                \"product\": {\n                    \"id\": 2,\n                    \"name\": \"note 10 plus\",\n                    \"price\": 5000\n                },\n                \"quantity\": 3\n            },\n            {\n                \"id\": 8,\n                \"product\": {\n                    \"id\": 3,\n                    \"name\": \"s10\",\n                    \"price\": 233333\n                },\n                \"quantity\": 4\n            }\n        ],\n        \"price\": 948332,\n        \"created_on\": \"2020-09-20T17:20:24.587564Z\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"protocolProfileBehavior": {}
+}
