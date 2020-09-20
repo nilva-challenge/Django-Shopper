@@ -1,7 +1,5 @@
 from django.contrib.auth import get_user_model, authenticate
-from django.contrib.auth import logout
 from django.http import JsonResponse
-
 from rest_framework import generics, permissions
 from rest_framework import status
 from rest_framework.response import Response
@@ -100,7 +98,6 @@ def google_login_token(request):
     if request.user.is_authenticated:
         user = request.user
         res = get_tokens_for_user(user)
-        logout(request)
         return JsonResponse(
             res,
             status=status.HTTP_200_OK
