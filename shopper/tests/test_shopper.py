@@ -1,17 +1,25 @@
+import json
+
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+
 from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
-from core import models
-from shopper import serializers
-import json
 
+from core import models
+
+from shopper import serializers
+
+# urls
 PRODUCT_LIST_URL = reverse('shop:products')
 ORDER_PRODUCT_URL = reverse('shop:order')
 
 
 def create_user(**params):
+    """
+        Function for create user
+    """
     return get_user_model().objects.create_user(**params)
 
 
@@ -24,18 +32,6 @@ def sample_product(name, **params):
     defaults.update(params)
 
     return models.Product.objects.create(name=name, **defaults)
-
-
-def sample_order(user, price=0):
-    """Create and return a sample order"""
-
-    return models.Order.objects.create(user=user, price=price)
-
-
-def sample_order_item(order, product, quantity):
-    """Create and return a sample order item"""
-
-    return models.OrderItem.objects.create(order=order, product=product, quantity=quantity)
 
 
 class PublicShopApiTest(APITestCase):

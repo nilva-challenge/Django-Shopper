@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
+# rest framework authentication
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -58,7 +60,7 @@ REST_FRAMEWORK = {
 }
 
 
-# Token settings
+# Jwt token settings
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
@@ -99,7 +101,7 @@ ROOT_URLCONF = 'shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['user_panel/templates/',],
+        'DIRS': ['user_panel/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -163,16 +165,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
 
 # local
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
+# user auth
 AUTH_USER_MODEL = 'core.User'
 
 # google auth
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',

@@ -1,18 +1,20 @@
-from rest_framework import generics, permissions
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import get_user_model, authenticate
-from rest_framework.response import Response
-from rest_framework import status
-from . import serializers
-import requests
-from django.urls import reverse
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout
 from django.http import JsonResponse
 
+from rest_framework import generics, permissions
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from . import serializers
+
+
 def get_tokens_for_user(user):
-    """Function for receive token from JWT"""
+    """
+        Function for receive token from JWT
+    """
 
     refresh = RefreshToken.for_user(user)
 
@@ -23,16 +25,23 @@ def get_tokens_for_user(user):
 
 
 class UserLoginApiView(generics.CreateAPIView):
-    """User login API endpoint"""
+    """
+        User login API endpoint
+    """
+
     serializer_class = serializers.UserSerializer
     queryset = get_user_model().objects.all()
 
     def create(self, request, *args, **kwargs):
         email = request.data['email']
         password = request.data['password']
+
+        # try for check that provided credential already signed up in website
         try:
             get_user_model().objects.get(email=email)
             user = authenticate(email=email, password=password)
+
+            # check provided credential
             if user is not None:
                 res = get_tokens_for_user(user)
                 return Response(
@@ -48,6 +57,8 @@ class UserLoginApiView(generics.CreateAPIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
         except get_user_model().DoesNotExist:
+
+            # check password length
             if len(password) < 8:
                 res = {
                     'error': 'The length of password must be more than 8'
@@ -56,6 +67,7 @@ class UserLoginApiView(generics.CreateAPIView):
                     res,
                     status=status.HTTP_400_BAD_REQUEST
                 )
+            # create new user and return it's token
             else:
                 user = get_user_model().objects.create_user(email=email, password=password)
                 res = get_tokens_for_user(user)
@@ -66,7 +78,10 @@ class UserLoginApiView(generics.CreateAPIView):
 
 
 class UserRetrieveUpdateApiView(generics.RetrieveUpdateAPIView):
-    """Retrieve and update user API endpoint"""
+    """
+        Retrieve and update user API endpoint
+    """
+
     serializer_class = serializers.UserEditSerializer
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (JWTAuthentication,)
@@ -78,7 +93,10 @@ class UserRetrieveUpdateApiView(generics.RetrieveUpdateAPIView):
 
 
 def google_login_token(request):
-    """Create token for login user by google account"""
+    """
+        Create token for login user by google account
+    """
+
     if request.user.is_authenticated:
         user = request.user
         res = get_tokens_for_user(user)

@@ -6,6 +6,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 def validate_positive_float(value):
+    """
+        this validator check price be positive
+    """
     if value < 0:
         raise ValidationError(
             _('%(value)s is lower than zero'),
@@ -14,11 +17,16 @@ def validate_positive_float(value):
 
 
 class UserManager(BaseUserManager):
-
+    """
+        manager for user model
+    """
     def create_user(self, email, password=None, **extra_fields):
         """Create and save a new user"""
+
         if not email:
             raise ValueError('Users must have an email address')
+
+        # normalize email
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -67,6 +75,7 @@ class Order(models.Model):
     def __str__(self):
         return f'{self.id}, {self.user.email}'
 
+    # this is for list order item related to current order obj
     @property
     def order_items(self):
         return self.orderitem_set.all()

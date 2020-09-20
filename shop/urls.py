@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from . import settings
-from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
 
@@ -11,5 +9,4 @@ urlpatterns = [
     path('user-panel/', include('user_panel.urls')),
     path('accounts/', include('allauth.urls')),
     path('', TemplateView.as_view(template_name='user_panel/index.html')),
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

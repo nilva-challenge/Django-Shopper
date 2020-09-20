@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserEditSerializer(serializers.ModelSerializer):
-    """Serailizer for edit user model"""
+    """Serializer for edit user model"""
 
     class Meta:
         model = get_user_model()
