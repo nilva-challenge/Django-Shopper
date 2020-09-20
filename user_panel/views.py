@@ -7,7 +7,9 @@ from . import serializers
 import requests
 from django.urls import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth import logout, login
+from django.http import JsonResponse
 
 def get_tokens_for_user(user):
     """Function for receive token from JWT"""
@@ -61,3 +63,27 @@ class UserLoginApiView(generics.CreateAPIView):
                     res,
                     status=status.HTTP_201_CREATED
                 )
+
+
+class UserRetrieveUpdateApiView(generics.RetrieveUpdateAPIView):
+    """Retrieve and update user API endpoint"""
+    serializer_class = serializers.UserEditSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (JWTAuthentication,)
+    queryset = get_user_model().objects.all()
+
+    def get_object(self):
+        """Retrieve anr return authenticated user"""
+        return self.request.user
+
+
+def google_login_token(request):
+    """Create token for login user by google account"""
+
+    user = request.user
+    res = get_tokens_for_user(user)
+    logout(request)
+    return JsonResponse(
+        res,
+        status=status.HTTP_200_OK
+    )
