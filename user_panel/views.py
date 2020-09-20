@@ -79,11 +79,19 @@ class UserRetrieveUpdateApiView(generics.RetrieveUpdateAPIView):
 
 def google_login_token(request):
     """Create token for login user by google account"""
-
-    user = request.user
-    res = get_tokens_for_user(user)
-    logout(request)
-    return JsonResponse(
-        res,
-        status=status.HTTP_200_OK
-    )
+    if request.user.is_authenticated:
+        user = request.user
+        res = get_tokens_for_user(user)
+        logout(request)
+        return JsonResponse(
+            res,
+            status=status.HTTP_200_OK
+        )
+    else:
+        res = {
+            'message': 'The authorization required!'
+        }
+        return JsonResponse(
+            res,
+            status=status.HTTP_401_UNAUTHORIZED
+        )
