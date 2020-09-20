@@ -3,9 +3,10 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
+from user_panel import serializers
 
 LOGIN_USER_URL = reverse('user:login')
-
+ME_URL = reverse('user:me')
 
 def create_user(**params):
     return get_user_model().objects.create_user(**params)
@@ -43,6 +44,11 @@ class PublicUserApiTest(APITestCase):
         ).exists()
         self.assertFalse(user_exists)
 
+    def test_user_profile_for_unauthorized_user(self):
+        """Test that unauthorized user can't see any profile"""
+        res = self.client.get(ME_URL)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
 
 class PrivateUserApiTests(TestCase):
     """Test API requests that require authentication"""
@@ -76,3 +82,28 @@ class PrivateUserApiTests(TestCase):
         res = self.client.post(LOGIN_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+    def test_retrieve_user_profile_success(self):
+        """Test retrieving profile for logged in user"""
+        res = self.client.get(ME_URL)
+
+        user = get_user_model().objects.get(id=self.user.id)
+
+        serializer = serializers.UserEditSerializer(user, many=False)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
+
+    def test_update_user_profile(self):
+        """Test updating the user profile for authenticated user"""
+        payload = {
+            'name': 'Joel',
+            'password': 'Amoi928.dish'
+        }
+        res = self.client.patch(ME_URL, payload)
+
+        self.user.refresh_from_db()
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.user.name, payload['name'])
+        self.assertTrue(self.user.check_password(payload['password']))
