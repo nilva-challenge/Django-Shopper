@@ -5,6 +5,7 @@ from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
 from core import models
 from shopper import serializers
+import json
 
 PRODUCT_LIST_URL = reverse('shop:products')
 ORDER_PRODUCT_URL = reverse('shop:order')
@@ -104,31 +105,147 @@ class PrivateShopApiTests(TestCase):
         pro2 = sample_product('note 10')
         pro3 = sample_product('mi 10')
 
-        order = sample_order(self.user)
+        payload = [
+                {
+                    "id": pro1.id,
+                    "quantity": 4
+                },
+                {
+                    "id": pro2.id,
+                    "quantity": 2
+                },
+                {
+                    "id": pro3.id,
+                    "quantity": 3
+                },
+        ]
 
-        sample_order_item(order, pro1, 4)
-        sample_order_item(order, pro2, 2)
-        sample_order_item(order, pro3, 3)
+        res = self.client.post(ORDER_PRODUCT_URL, json.dumps(payload), content_type='application/json')
+
+        order = models.Order.objects.get(id=res.data['data']['id'])
+        serializer = serializers.OrderSerializer(order, many=False)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data['data'], serializer.data)
+
+    def test_ordering_product_with_same_id_successful(self):
+        """Test that ordering products 2 times in request is successful"""
+        pro1 = sample_product('pro max')
+        pro2 = sample_product('note 10')
 
         payload = [
-            {
-                'id': pro1.id,
-                'quantity': 4
-            },
-            {
-                'id': pro2.id,
-                'quantity': 2
-            },
-            {
-                'id': pro3.id,
-                'quantity': 3
-            },
+                {
+                    "id": pro1.id,
+                    "quantity": 4
+                },
+                {
+                    "id": pro2.id,
+                    "quantity": 1
+                },
+                {
+                    "id": pro2.id,
+                    "quantity": 3
+                },
         ]
-        res = self.client.post(ORDER_PRODUCT_URL, {
-            'products':payload
-        })
 
+        res = self.client.post(ORDER_PRODUCT_URL, json.dumps(payload), content_type='application/json')
+
+        order = models.Order.objects.get(id=res.data['data']['id'])
         serializer = serializers.OrderSerializer(order, many=False)
+
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(res.data, serializer.data)
-        # self.assertEqual(len(res.data), 1)
+        self.assertEqual(res.data['data'], serializer.data)
+
+    def test_ordering_product_with_below_one_quantity(self):
+        """Test that ordering products with not positive quantity must be bad request"""
+        pro1 = sample_product('pro max')
+        pro2 = sample_product('note 10')
+        pro3 = sample_product('mi 10')
+
+        payload = [
+                {
+                    "id": pro1.id,
+                    "quantity": 4
+                },
+                {
+                    "id": pro2.id,
+                    "quantity": -2
+                },
+                {
+                    "id": pro3.id,
+                    "quantity": 3
+                },
+        ]
+
+        res = self.client.post(ORDER_PRODUCT_URL, json.dumps(payload), content_type='application/json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_ordering_product_with_stock(self):
+        """Test that ordering products with not be available must be bad request"""
+        pro1 = sample_product('pro max')
+        pro2 = sample_product('note 10')
+        pro3 = sample_product('mi 10')
+
+        payload = [
+                {
+                    "id": pro1.id,
+                    "quantity": 4
+                },
+                {
+                    "id": pro2.id,
+                    "quantity": 2
+                },
+                {
+                    "id": pro3.id,
+                    "quantity": 0
+                },
+        ]
+
+        res = self.client.post(ORDER_PRODUCT_URL, json.dumps(payload), content_type='application/json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_ordering_not_exists_product(self):
+        """Test that ordering doesn't exists must be 404 not found"""
+        pro1 = sample_product('pro max')
+
+        payload = [
+                {
+                    "id": pro1.id,
+                    "quantity": 4
+                },
+                {
+                    "id": 6,
+                    "quantity": 2
+                },
+        ]
+
+        res = self.client.post(ORDER_PRODUCT_URL, json.dumps(payload), content_type='application/json')
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_ordering_product_more_than_our_inventory(self):
+        """Test that ordering products more than our inventory must be bad request"""
+        pro1 = sample_product('pro max')
+        pro2 = sample_product('note 10')
+        pro3 = sample_product('mi 10')
+
+        payload = [
+                {
+                    "id": pro1.id,
+                    "quantity": 4
+                },
+                {
+                    "id": pro2.id,
+                    "quantity": 2
+                },
+                {
+                    "id": pro3.id,
+                    "quantity": 17
+                },
+        ]
+
+        res = self.client.post(ORDER_PRODUCT_URL, json.dumps(payload), content_type='application/json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)

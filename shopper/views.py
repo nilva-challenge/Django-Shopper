@@ -39,12 +39,8 @@ class OrderCreateViewSet(generics.CreateAPIView):
                 product['quantity'] += value
 
     def create(self, request, *args, **kwargs):
-        data = request.data
-        print(request.data)
-        data_items = data['products']
+        data_items = request.data
         products = []
-
-        print(json.loads(data_items))
 
         # check product id is available and check quantity must be more than 0
         for product in data_items:
@@ -62,9 +58,9 @@ class OrderCreateViewSet(generics.CreateAPIView):
                     return Response(res, status=status.HTTP_400_BAD_REQUEST)
             except models.Product.DoesNotExist:
                 res = {
-                        'message': 'The order contains unavailable products!'
+                        'message': 'The product not found!'
                     }
-                return Response(res, status=status.HTTP_400_BAD_REQUEST)
+                return Response(res, status=status.HTTP_404_NOT_FOUND)
 
         # sum quantity of same product
         for product in data_items:
@@ -101,7 +97,7 @@ class OrderCreateViewSet(generics.CreateAPIView):
             product_obj.save()
         order.price = price
         order.save()
-        print(serializers.OrderSerializer(order))
+        # print(serializers.OrderSerializer(order))
         res = {
             'message': 'Your order has been successfully registered',
             'data': serializers.OrderSerializer(order).data
@@ -110,5 +106,3 @@ class OrderCreateViewSet(generics.CreateAPIView):
             res,
             status=status.HTTP_201_CREATED
         )
-
-
