@@ -2,6 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, unique=True, on_delete=models.CASCADE)
+    location = models.CharField(max_length=140)
+    gender = models.CharField(max_length=140)
+    profile_picture = models.ImageField(upload_to='static/profile_picture', blank=True)
+
+    def __unicode__(self):
+        return u'Profile of user: %s' % self.user.username
+
+
 class Customer(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
@@ -77,8 +87,6 @@ class ShippingAddress(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     address = models.CharField(max_length=200, null=False)
     city = models.CharField(max_length=200, null=False)
-    state = models.CharField(max_length=200, null=False)
-    zipcode = models.CharField(max_length=200, null=False)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

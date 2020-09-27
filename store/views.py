@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 import json
 import datetime
 from .models import *
-from .utils import cookieCart, cartData, guestOrder
+from .utils import cartData, guestOrder
 
 
 class SignUp(generic.CreateView):
@@ -16,18 +16,29 @@ class SignUp(generic.CreateView):
     template_name = 'signup.html'
 
 
+@login_required
+def profile(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            context = User.objects.get(id=request.user.id)
+            return render(request, context)
+
+
+@login_required
 def store(request):
-    data = cartData(request)
+    if request.user.is_authenticated:
+        data = cartData(request)
+        cartItems = data['cartItems']
+        # order = data['order']
+        # items = data['items']
+        products = Product.objects.all()
+        context = {'products': products, 'cartItems': cartItems}
+        return render(request, 'store/store.html', context)
+    else:
+        return HttpResponse(status=401)
 
-    cartItems = data['cartItems']
-    order = data['order']
-    items = data['items']
 
-    products = Product.objects.all()
-    context = {'products': products, 'cartItems': cartItems}
-    return render(request, 'store/store.html', context)
-
-
+@login_required
 def cart(request):
     data = cartData(request)
 
@@ -99,9 +110,7 @@ def processOrder(request):
             customer=customer,
             order=order,
             address=data['shipping']['address'],
-            city=data['shipping']['city'],
-            state=data['shipping']['state'],
-            zipcode=data['shipping']['zipcode'],
+            city=data['shipping']['city']
         )
 
     return JsonResponse('Payment submitted..', safe=False)
