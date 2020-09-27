@@ -62,6 +62,7 @@ def checkout(request):
     return render(request, 'store/checkout.html', context)
 
 
+@login_required
 def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
@@ -87,7 +88,7 @@ def updateItem(request):
 
     return JsonResponse('Item was added', safe=False)
 
-
+@login_required
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
