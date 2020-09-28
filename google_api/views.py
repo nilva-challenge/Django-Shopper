@@ -16,7 +16,7 @@ from django.db import DatabaseError
 from rest_framework.authtoken.models import Token
 from google_api.serializers import GoogleTokenSerializer
 from social.models import SocialAccount, SocialProvider
-from google_token_util import authorize_by_google_api_profile
+from .google_token_util import authorize_by_google_api_profile
 
 USER_MODEL = get_user_model()
 if hasattr(settings, 'GOOGLE_CLIENT_FILE_PATH'):

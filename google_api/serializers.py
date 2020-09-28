@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 from social.models import SocialProvider
-from google_token_util import authorize_by_google_api_profile
+from .google_token_util import authorize_by_google_api_profile
 
 UserModel = get_user_model()
 
