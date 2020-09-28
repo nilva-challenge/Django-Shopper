@@ -1,0 +1,98 @@
+<form action="{% url 'user:signup' %}" method="POST">
+    {% csrf_token %}
+    {% if form.errors %}
+        <div class="form-group alert alert-warning" role="alert">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    <div class="form-group">
+        {#        <label for="id_first_name">First name:</label>#}
+        {{ form.first_name.label_tag }}
+
+        <input type="text" class="form-control" id="id_first_name"
+               placeholder="Your First name" required="" name="first_name">
+
+        {% if form.first_name.errors %}
+            <ol>
+                {% for error in form.first_name.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        {{ form.last_name.label_tag }}
+        {#        <label for="id_last_name">Last name:</label>#}
+        <input type="text" class="form-control" id="id_last_name"
+               placeholder="Your Last name" required="" name="last_name">
+
+        {% if form.last_name.errors %}
+            <ol>
+                {% for error in form.last_name.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        {{ form.email.label_tag }}
+        {#        <label for="id_email">Email:</label>#}
+        <input type="email" class="form-control" id="id_email"
+               aria-describedby="input email" placeholder="example@email.com" required=""
+               name="email">
+
+        {% if form.email.help_text %}
+            <p class="help">{{ form.email.help_text|safe }}</p>
+        {% endif %}
+
+        {% if form.email.errors %}
+            <ol>
+                {% for error in form.email.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        {#        {{ form.password1.label_tag }}#}
+        <label for="{{ form.password1.id_for_label }}">password:</label>
+        {#        <label for="password1" class=""></label>#}
+
+        {{ form.password1 }}
+        {#        <input type="password" class="form-control" id="password1" placeholder="" required=""#}
+        {#               name="password1">#}
+    </div>
+
+    <div class="form-group">
+
+        {#        {{ form.password2.label_tag }}#}
+
+        <label for="{{ form.password2.id_for_label }}">Confirm password:</label>
+        {#        <label for="password2" class=""></label>#}
+        {#        <input type="password" class="form-control" id="password2" placeholder="" required=""#}
+        {#               name="password2">#}
+
+        {{ form.password2 }}
+        {#        <input type="password" class="form-control" id="password2" placeholder="" required=""#}
+        {#               name="password2">#}
+
+        {% if form.password2.errors %}
+            <ol>
+                {% for error in form.password2.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary submit mb-4">Register</button>
+
+    <a href="{% url 'user:login' %}" type="button" class="">Login</a>
+    <p class="text-center pb-4">
+        <a href="#">By clicking Register, I agree to your terms</a>
+    </p>
+</form>
