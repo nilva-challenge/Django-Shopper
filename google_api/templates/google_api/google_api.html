@@ -1,0 +1,183 @@
+<!-- put this in meta -->
+<script src="https://apis.google.com/js/platform.js?onload=initClient" async defer></script>
+<div id="customBtn">
+    <button>Google</button>
+</div>
+
+<button id="revoke-access-button" onclick="revokeAccess()">revoke access</button>
+
+<!-- not implemented in this django project -->
+<button onclick="offline_access()">Google offline access</button>
+<script>
+    /**
+     * The Sign-In client object.
+     */
+    var auth2;
+
+    var initClient = function () {
+        //just get user id
+        gapi.load('auth2', function () {
+            auth2 = gapi.auth2.init({
+                //'client_id': "104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com",
+                'client_id': "{{ client_id }}",
+                //cookie_policy: 'none',
+                'fetch_basic_profile': false,
+                'scope': 'https://www.googleapis.com/auth/userinfo.profile',
+            });
+            /**
+             * GoogleAuth.then(onInit, onError)
+             * onInt(gapi.auth2.GoogleAuth)
+             **/
+            auth2.then(function (GoogleAuth) {
+                    console.log("init.then");
+                    //GoogleAuth.signIn(options)
+                    options = new gapi.auth2.SigninOptionsBuilder();
+                    //options.setPrompt('select_account');
+
+
+                    //auth2.attachClickHandler call auth2.signIn(options)
+                    auth2.attachClickHandler('customBtn', options, onSuccess, onFailure);
+                }
+            );
+        })
+    };
+
+    /**
+     * Handle sign-in failures.
+     */
+    const onFailure = function (error) {
+        console.log(error);
+    };
+    /**
+     * Handle successful sign-ins.
+     * arg: auth2.currentUser.get()
+     */
+    const onSuccess = function (user) {
+        //console.log('Signed in as ', auth2.currentUser.get().getAuthResponse().id_token);
+        //console.log('Signed in as ', user.getAuthResponse().id_token);
+
+        afterSuccess(user);
+    };
+
+
+    /**
+     Sign the user in, and then retrieve their ID.
+     the signIn function
+     auth2.signIn(options).then(function () {
+            console.log('getId(): ', auth2.currentUser.get().getId());
+        });
+     */
+
+    var code;
+    // there is no implementation of this in this django backend just a template
+    //get offline access when user in offline
+    const offline_access = function () {
+        auth2.grantOfflineAccess({
+            scope: 'profile email',
+            prompt: 'consent',
+        }).then(function (resp) {
+            code = resp.code;
+            //handle the code
+        });
+    };
+
+    function revokeAccess() {
+        auth2.disconnect();
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    //called after google successfully authenticate user
+    function afterSuccess(googleUser) {
+        // The ID token you need to pass to your backend:
+        let id_token = googleUser.getAuthResponse().id_token;
+
+        //get CSRF token cookie
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        let csrftoken = getCookie('csrftoken');
+        /**
+         cross-browser-ajax-call
+         */
+        let xhr;
+        if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
+            xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) { // IE 6 and older
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xhr.onreadystatechange = onXhrChange; //assigning reference to the function
+        //OR the use the latter (anonymous function)
+        //xhr.onreadystatechange = function () {
+        // Process the server response here.
+        //};
+
+        //Keep the method=(GET, POST, HEAD) all-capitals according to the HTTP standard
+
+        {#//xhr.open('POST', "//{{ request.site }}{% url  %}", true);#}
+        //GET,
+        {#//xhr.open('GET', "{% url  %}", true);#}
+        //xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest"); //request.is_ajax() depends on X-Requested-With header
+        //xhr.send();
+
+
+        xhr.open('POST', "{% url 'google_rest_add_social_login_connect' %}", true);
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest"); //django: request.is_ajax() depends on X-Requested-With header
+
+        //POST FORM, Content-Type: application/x-www-form-urlencoded
+        //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //xhr.setRequestHeader('X-CSRFToken', csrftoken);
+        //<input name>=encodeURIComponent("<data goes here >+&+<an input name>=encodeURIComponent("< data goes here>")
+        //xhr.send('id_token=' + encodeURIComponent(id_token));
+
+        //POST JSON, Content-Type: application/json
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+        let json = JSON.stringify({
+            id_token: id_token,
+        });
+        xhr.send(json);
+
+        //xhr on response
+        function onXhrChange() {
+            try {
+                console.log("readyState: ", xhr.readyState);
+                console.log("status: ", xhr.status);
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    // Everything is good, google response was received.
+                    if (xhr.status === 200 || xhr.status === 201) {
+                        const JSON_response = JSON.parse(xhr.responseText);
+                        //redirect the user
+                        //window.location.href = JSON_response['HTTP/1.1 302 OK'];
+                    } else {
+                        // There was a problem with the request.
+                        // For example, the response may have a 404 (Not Found)
+                        // or 500 (Internal Server Error) response code.
+                    }
+                } else {
+                    // Not ready yet.
+                }
+            } catch (e) {
+                console.log('Caught Exception: ' + e.description);
+            }
+        }
+    }
+
+</script>

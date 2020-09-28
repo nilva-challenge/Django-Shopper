@@ -1,0 +1,34 @@
+<div>
+    <a href="{% url 'google_call' 'google_callback_signup' %}">google_callback_signup</a>
+    <br>
+    <a href="{% url 'google_call' 'google_callback_login' %}">google_callback_login</a>
+    <br>
+    <a href="{% url 'google_call' 'google_callback_login_signup' %}">google_callback_login_signup</a>
+    <br>
+    <a href="{% url 'google_call' 'google_callback_add_social' %}">google_callback_add_social</a>
+    <br>
+    <a href="{% url 'google_call' 'google_callback_revoke' %}">google_callback_revoke</a>
+</div>
+
+<div>
+    <p>pk: {{ user.pk }}</p>
+    <br>
+    <p>id: {{ user.id }}</p>
+    <br>
+    <p>name: {{ user.name }}</p>
+    <br>
+    <p>email: {{ user.email }}</p>
+    <br>
+    <p>user's google {{ user.provider.email }}</p>
+</div>
+
+<!-- font awesome css -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      rel="stylesheet">
+<div class="btn-group">
+    <a class='btn btn-danger disabled'><i class="fa fa-google-plus"
+                                          style="width:16px; height:20px"></i></a>
+    <a class='btn btn-danger'
+       href="{% url 'google_call' 'google_callback_login_signup' %}"
+       style="width:12em;">Continue by Google</a>
+</div>

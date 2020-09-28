@@ -1,0 +1,7 @@
+<form action="{% url 'user:send_email_verification' %}" method="post">
+    {% csrf_token %}
+    <label> Email:
+        <input type="email" name="email" autocomplete="email" autofocus>
+    </label>
+    <input type="submit" value="send">
+</form>

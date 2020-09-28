@@ -1,0 +1,52 @@
+{% load i18n static %}
+{% if not user.is_authenticated %}
+    {% if form.errors and not form.non_field_errors %}
+        <p class="">
+            {% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}
+                {% trans "Please correct the errors below." %}{% endif %}
+        </p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class="">
+                {{ error }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" action="{% url 'user:login' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>{{ form.email.error }}</td>
+                <td>{{ form.email.label_tag }}</td>
+                <td>{{ form.email }}</td>
+            </tr>
+
+            <tr>
+                <td>{{ form.username.error }}</td>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password.errors }}</td>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+        </table>
+
+        <input type="submit" value="login">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+    {#     Assumes you setup the password_reset view in your URLconf #}
+    {% url 'user:password_reset' as password_reset_url %}
+    {% if password_reset_url %}
+        <div class="">
+            <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+        </div>
+    {% endif %}
+{% else %}
+    <p>you are logged in as {{ user }}</p>
+{% endif %}
