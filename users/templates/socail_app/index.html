@@ -1,0 +1,65 @@
+{#{% load socialaccount %}#}
+{#<html>#}
+{#  <head>#}
+{#    <title>Google Registration</title>#}
+{#  </head>#}
+{#  <body>#}
+{#  <h1>My Google Login Project</h1>#}
+{#  {% if user.is_authenticated %}#}
+{#  <p>Welcome, {{ user.email }} !</p>#}
+{##}
+{#  {% else %}#}
+{#  <h1>My Google Login Project</h1>#}
+{#  <a href="{% provider_login_url 'google' %}">Login with Google</a>#}
+{#  {% endif %}#}
+{##}
+{#  </body>#}
+{#</html>#}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {#    <meta name="google-signin-client_id"#}
+    {#          content="85625128117-5cl3uqcjvmqvuhkjsam8104mc68u1nhr.apps.googleusercontent.com">#}
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <meta name="google-signin-client_id"
+          content="339487479985-tnm34g8caeglli1beflrbrc0psvsbs2o.apps.googleusercontent.com">
+
+
+    <title>Document</title>
+</head>
+<body>
+
+
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+
+<script>
+    function onSignIn(googleUser) {
+        {#var profile = googleUser.getBasicProfile();#}
+        {#console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.#}
+        {#console.log('Name: ' + profile.getName());#}
+        {#console.log('Image URL: ' + profile.getImageUrl());#}
+        {#console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.#}
+        {#console.log('profile: ', profile);#}
+        {#console.log('googleUser: ', googleUser);#}
+        {#console.log('getAuthResponse: ', googleUser.getAuthResponse(true));#}
+        {#console.log('expires_at: ', googleUser.getAuthResponse()["expires_at"]);#}
+        {#console.log('access_token: ', googleUser.getAuthResponse()["access_token"]);#}
+        {#console.log('reloadAuthResponse: ', googleUser.reloadAuthResponse());#}
+        {#console.log('gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse: ',gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse);#}
+        {#console.log('access_token: ', JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true)['access_token']));#}
+        console.log('id_token: ', JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true)['id_token']));
+
+    }
+</script>
+
+
+</body>
+</html>
