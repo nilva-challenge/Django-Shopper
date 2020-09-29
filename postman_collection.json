@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "e2c0d185-7ab4-407a-afb5-6caa4da118bc",
+		"name": "nilva challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login with google",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/users/sign_in_with_google?id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjJjNmZhNmY1OTUwYTdjZTQ2NWZjZjI0N2FhMGIwOTQ4MjhhYzk1MmMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMzM5NDg3NDc5OTg1LXRubTM0ZzhjYWVnbGxpMWJlZmxyYnJjMHBzdnNiczJvLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMzM5NDg3NDc5OTg1LXRubTM0ZzhjYWVnbGxpMWJlZmxyYnJjMHBzdnNiczJvLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAyOTE5NTI5NjE4NDYyMjQwMjYxIiwiZW1haWwiOiJtZWhyYXlhbmVoQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoieEtWc1lKMmNjYUcwWEE2c28tdnUxUSIsIm5hbWUiOiJtb2hhbW1hZCBlZ2hiYWxwb29yIiwicGljdHVyZSI6Imh0dHBzOi8vbGg1Lmdvb2dsZXVzZXJjb250ZW50LmNvbS8tdWp6czdnU2l1RHcvQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQU1adXVjbkhaa3o0VHpfOU5NZlpUN2NtU3ZjX3dBZ0V2US9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoibW9oYW1tYWQiLCJmYW1pbHlfbmFtZSI6ImVnaGJhbHBvb3IiLCJsb2NhbGUiOiJmYSIsImlhdCI6MTYwMTM1NDY4MiwiZXhwIjoxNjAxMzU4MjgyLCJqdGkiOiI3N2RlMWUxMmEwMjYyZmM3ZTg5MDQ4MDgzMmU1NGZkMjNhNDg0NGNmIn0.mM7gq-6f0jab7lpdIeg-fNRFuXCeBVz6gEmk8qZO2Cz6IFAiJm3QphQnqa9xbsBCH0yaYV3Im5_b9HRiTEAUNkRi98RMFKHNqyvQOJ9RyHTOLfddpjS_dSfqUbe36ydDuYHqyo8NzSzTnVxGcnXJ0HAHVXFktgCfyxLt1nddeLJZR-2UHjLsUA4kpNRbK7Aoq1yJaO_9MZA-15Xd5O9jyyvBcOi9x0BLpG_aG5DJWs0oLY979o8bU1v9oiejNmLISFbVBeE8zq9oYekSkhfYEVosUHHWWJ14JAJbodu_Bi_sUsHlL1onfz4Xt43iC0Jyg1vcH77Dx4iofbm8Q-mMUA",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"sign_in_with_google"
+					],
+					"query": [
+						{
+							"key": "id_token",
+							"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJjNmZhNmY1OTUwYTdjZTQ2NWZjZjI0N2FhMGIwOTQ4MjhhYzk1MmMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMzM5NDg3NDc5OTg1LXRubTM0ZzhjYWVnbGxpMWJlZmxyYnJjMHBzdnNiczJvLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMzM5NDg3NDc5OTg1LXRubTM0ZzhjYWVnbGxpMWJlZmxyYnJjMHBzdnNiczJvLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAyOTE5NTI5NjE4NDYyMjQwMjYxIiwiZW1haWwiOiJtZWhyYXlhbmVoQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoieEtWc1lKMmNjYUcwWEE2c28tdnUxUSIsIm5hbWUiOiJtb2hhbW1hZCBlZ2hiYWxwb29yIiwicGljdHVyZSI6Imh0dHBzOi8vbGg1Lmdvb2dsZXVzZXJjb250ZW50LmNvbS8tdWp6czdnU2l1RHcvQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQU1adXVjbkhaa3o0VHpfOU5NZlpUN2NtU3ZjX3dBZ0V2US9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoibW9oYW1tYWQiLCJmYW1pbHlfbmFtZSI6ImVnaGJhbHBvb3IiLCJsb2NhbGUiOiJmYSIsImlhdCI6MTYwMTM1NDY4MiwiZXhwIjoxNjAxMzU4MjgyLCJqdGkiOiI3N2RlMWUxMmEwMjYyZmM3ZTg5MDQ4MDgzMmU1NGZkMjNhNDg0NGNmIn0.mM7gq-6f0jab7lpdIeg-fNRFuXCeBVz6gEmk8qZO2Cz6IFAiJm3QphQnqa9xbsBCH0yaYV3Im5_b9HRiTEAUNkRi98RMFKHNqyvQOJ9RyHTOLfddpjS_dSfqUbe36ydDuYHqyo8NzSzTnVxGcnXJ0HAHVXFktgCfyxLt1nddeLJZR-2UHjLsUA4kpNRbK7Aoq1yJaO_9MZA-15Xd5O9jyyvBcOi9x0BLpG_aG5DJWs0oLY979o8bU1v9oiejNmLISFbVBeE8zq9oYekSkhfYEVosUHHWWJ14JAJbodu_Bi_sUsHlL1onfz4Xt43iC0Jyg1vcH77Dx4iofbm8Q-mMUA"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login with email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/users/login_with_email?email=mohammad@goo.com&password=5872050",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"login_with_email"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "mohammad@goo.com"
+						},
+						{
+							"key": "password",
+							"value": "5872050"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all_products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "aRs6RQNxrMAcy1BdFipRzWfEDyvraZsx7BUXJjf6AZl4R7jlw45BFyNTJQOH0NAObBMQBQHE5IChJBKkZv85T7KXkgxNQEDudqjw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8000/products/all_products",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						"all_products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new order",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "jd0nOuGFWtG9HNubjAviC0GzrPhhaKKWgEq64igeLEiFsq7cau1wJerXfWGl2VPVYmWlEkxDj2U2XF3iyP7zKzYGbqkjm5wYWkqu",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\":1\r\n        ,\"order_number\":1\r\n    },\r\n        {\r\n        \"id\":2\r\n        ,\"order_number\":3\r\n    }\r\n]"
+				},
+				"url": {
+					"raw": "localhost:8000/products/new_order",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						"new_order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get my profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "jd0nOuGFWtG9HNubjAviC0GzrPhhaKKWgEq64igeLEiFsq7cau1wJerXfWGl2VPVYmWlEkxDj2U2XF3iyP7zKzYGbqkjm5wYWkqu",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8000/users/get_my_profile",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"get_my_profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update my profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "jd0nOuGFWtG9HNubjAviC0GzrPhhaKKWgEq64igeLEiFsq7cau1wJerXfWGl2VPVYmWlEkxDj2U2XF3iyP7zKzYGbqkjm5wYWkqu",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "mohammad",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "eghbalpoor",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "rasht",
+							"type": "text"
+						},
+						{
+							"key": "postal_code",
+							"value": "4152415",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "5872050",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/users/update_my_profile",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"update_my_profile"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
