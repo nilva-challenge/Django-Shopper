@@ -9,6 +9,7 @@ python = "^3.9"
 Django = "^4.2.2"
 djangorestframework = "^3.14.0"
 python-decouple = "^3.8"
+drf_yasg = "^1.21.5"
 
 [tool.poetry.dev-dependencies]
 

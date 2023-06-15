@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.user.models import User
 
 
-class IsSeller(BasePermission):
+class IsSellerUser(BasePermission):
     """
         Allow Seller for use Actions
     """
@@ -17,7 +17,7 @@ class IsSeller(BasePermission):
         )
 
 
-class IsAdmin(BasePermission):
+class IsAdminUser(BasePermission):
     """
         Allow Admin for use Actions
     """

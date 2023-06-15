@@ -2,23 +2,20 @@ from django.urls import re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAdminUser
 
 from shopper import settings
 
 schema_view = get_schema_view(
     openapi.Info(
-        # title=settings.APP_INFO["name"],
-        # default_version=settings.APP_INFO["version"],
-        # description=settings.APP_INFO["description"],
-        # terms_of_service="https://www.google.com/policies/terms/",
-        # contact=openapi.Contact(email=settings.APP_INFO["contact_email"]),
-        # license=openapi.License(name="BSD License"),
-    ),
-    public=True,
-    authentication_classes=[SessionAuthentication],
-    permission_classes=[IsAdminUser],
-)
+        title="Shopper Test Project",
+        default_version="0.1.0",
+        description="swagger for check apis",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email='test@test.com',
+                                license=openapi.License(name="MIT License"), ),
+        public=True,
+        authentication_classes=[SessionAuthentication],
+    ))
 
 # noinspection PyUnresolvedReferences
 urlpatterns = [
