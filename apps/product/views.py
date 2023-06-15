@@ -1,3 +1,5 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -11,10 +13,16 @@ class ListProduct(viewsets.ModelViewSet):
     http_method_names = ['get']
     permission_classes = [IsAdminUser | IsSellerUser | IsCustomerUser]
 
-    # queryset = Product.objects.all()
-
-    #
+    @swagger_auto_schema(
+        request_body=ProductSerializer,
+        responses={
+            200: openapi.Response(description='{"token" : string}'),
+            401: openapi.Response(description='Unauthorized'),
+            404: openapi.Response(description='not Found'),
+        }
+    )
     def get_queryset(self):
+
         if IsSellerUser().has_permission(request=self.request, view=self) or IsAdminUser().has_permission(
                 request=self.request, view=self):
             queryset = Product.objects.all()
@@ -25,6 +33,9 @@ class ListProduct(viewsets.ModelViewSet):
         return queryset
 
     def list(self, request, *args, **kwargs):
+        """
+            Get List of Products base on Role
+        """
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
@@ -35,12 +46,10 @@ class ListProduct(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    class RetrieveModelMixin:
+    def retrieve(self, request, *args, **kwargs):
         """
-        Retrieve a model instance.
+            Get Details of Single Product
         """
-
-        def retrieve(self, request, *args, **kwargs):
-            instance = self.get_object()
-            serializer = self.get_serializer(instance)
-            return Response(serializer.data)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
