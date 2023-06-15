@@ -13,6 +13,7 @@ class UserAdmin(AbstractUserAdmin):
     search_fields = ("first_name", "last_name", "email")
     ordering = ('email',)
     readonly_fields = ('id', "email")
+
     add_fieldsets = (
         (
             None,
@@ -24,6 +25,7 @@ class UserAdmin(AbstractUserAdmin):
     )
     fieldsets = (
         (None, {"fields": ("password",)}),
+        (_("role"), {"fields": ("role",)}),
         (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
         (
             _("Permissions"),

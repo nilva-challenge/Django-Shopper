@@ -1,6 +1,4 @@
-from django.contrib.auth import authenticate
 from rest_framework import viewsets, status
-from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
 from apps.user.exceptions import UnAuthorizedUser
