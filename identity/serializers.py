@@ -75,17 +75,4 @@ class UserPasswordLoginSerializer(serializers.Serializer):
 
         return attrs
 
-    def create(self, validated_data):
-        email = self.context.get('email')
-        password = validated_data['password']
 
-        try:
-            user = authenticate(email=email, password=password)
-
-            if not user:
-                user = User.objects.create_user(email=email, password=password)
-
-            token = CacheManager.set_cache_token(user)
-            return {'token': token, 'user': user}
-        except Exception as e:
-            return {'error': str(e)}

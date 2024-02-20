@@ -1,11 +1,11 @@
-from rest_framework.views import APIView
+from django.urls import reverse
 from rest_framework import generics, status
 from rest_framework.response import Response
-from django.contrib.auth import get_user_model
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.contrib.auth import get_user_model
+from rest_framework.permissions import AllowAny
+from django.contrib.auth.hashers import check_password
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .serializers import *
 
@@ -49,14 +49,6 @@ class UserPasswordLoginView(generics.CreateAPIView):
     http_method_names = ['post', 'get']
     permission_classes = (AllowAny,)
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-
-        email = self.request.query_params.get('email', '')
-        context['email'] = email
-
-        return context
-
     def get(self, request, *args, **kwargs):
         email = request.query_params.get('email', '')
 
@@ -66,4 +58,21 @@ class UserPasswordLoginView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        return Response({'token': '', 'user': ''})
+        email = self.request.query_params.get('email', '')
+        password = serializer.validated_data['password']
+
+        try:
+
+            user = User.objects.get(email=email)
+
+            if not check_password(password, user.password):
+                return Response({'error': 'Invalid password'}, status=status.HTTP_400_BAD_REQUEST)
+
+        except User.DoesNotExist:
+            try:
+                user = User.objects.create_user(username=email,email=email, password=password)
+            except Exception as e:
+                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        token = CacheManager.set_cache_token(user)
+        return Response({'token': str(token)}, status=status.HTTP_200_OK)
