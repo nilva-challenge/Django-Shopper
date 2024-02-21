@@ -28,17 +28,18 @@ class Product(models.Model):
 class Order(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    products = models.ManyToManyField('Product', through='OrderItem')
     order_date = models.DateTimeField(auto_now_add=True)
 
     def total_price(self):
         """
-        Calculate the total price of the order.
+        Calculate the total price for the order.
 
         Returns:
-        - Decimal: Total price of the order.
+        - Decimal: Total price for the order.
         """
-        return sum(item.product.price * item.quantity for item in self.order_items.all())
+        order_items = self.order_items.all()
+        total_price = sum(item.subtotal() for item in order_items)
+        return total_price
 
     def __str__(self):
         return f"Order #{self.id} - {self.user.email}"
