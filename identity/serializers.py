@@ -1,83 +1,14 @@
 from rest_framework import serializers
 
 from django.core.validators import EmailValidator
-from django.contrib.auth import get_user_model, authenticate
-from rest_framework_simplejwt.tokens import AccessToken
+from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
-
-from rest_framework_simplejwt.serializers import TokenObtainSerializer
-from rest_framework_simplejwt.tokens import AccessToken
-from typing import Any, Dict
 
 from .custom_classes import CacheManager
 
 User = get_user_model()
 
 # Authentication Serializers
-
-
-class CustomTokenObtainPairSerializer(TokenObtainSerializer):
-    """
-    Custom token obtain pair serializer.
-
-    Attributes:
-    - token_class: The token class used for authentication (AccessToken).
-
-    Methods:
-    - validate(attrs: Dict[str, Any]) -> Dict[str, Any]:
-        Validate the provided attributes and generate an access token.
-
-    - create(validated_data: Dict[str, Any]) -> User:
-        Create a new user instance with the provided data.
-
-        Args:
-        - validated_data (dict): The validated data containing user information.
-
-        Returns:
-        - User: The newly created user instance.
-
-        Raises:
-        - serializers.ValidationError: If the passwords do not match.
-    """
-
-    token_class = AccessToken
-
-    def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Validate the provided attributes and generate an access token.
-
-        Args:
-        - attrs (dict): The attributes to be validated.
-
-        Returns:
-        - dict: The validated data with the access token.
-
-        Raises:
-        - serializers.ValidationError: If validation fails.
-        """
-        data = super().validate(attrs)
-        access = self.get_token(self.user)
-        data["access"] = str(access)
-        return data
-
-    def create(self, validated_data: Dict[str, Any]) -> User:
-        """
-        Create a new user instance with the provided data.
-
-        Args:
-        - validated_data (dict): The validated data containing user information.
-
-        Returns:
-        - User: The newly created user instance.
-
-        Raises:
-        - serializers.ValidationError: If the passwords do not match.
-        """
-        password = validated_data.pop('password2')
-        user = User(**validated_data)
-        user.set_password(password)
-        user.save()
-        return user
 
 
 class UserEmailLoginSerializer(serializers.Serializer):
