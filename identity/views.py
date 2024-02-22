@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect
 
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
@@ -155,3 +156,38 @@ class UserPasswordLoginView(generics.CreateAPIView):
         token, created = Token.objects.get_or_create(user=user)
 
         return Response({'token': token.key}, status=status.HTTP_200_OK)
+
+
+class UserProfileView(generics.RetrieveUpdateAPIView):
+    """
+    API view for retrieving and updating the user profile.
+
+    Attributes:
+    - authentication_classes (list): The authentication classes used for authenticating requests (Token Authentication).
+    - serializer_class (UserProfileSerializer): The serializer class used for serializing and deserializing user profile data.
+    - permission_classes (list): The permission classes used for controlling access to the view (IsAuthenticated).
+
+    Methods:
+    - get_object(): Retrieves the user profile for the authenticated user.
+
+    Example:
+    To retrieve the user profile, make a GET request to the endpoint with the appropriate token.
+    To update the user profile, make a PUT or PATCH request with the desired data.
+
+    Note:
+    This view requires Token Authentication for authentication and IsAuthenticated permission for access.
+    """
+
+    authentication_classes = [TokenAuthentication]
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        """
+        Retrieves the user profile for the authenticated user.
+
+        Returns:
+        - User: The user instance.
+        """
+        return self.request.user
+
