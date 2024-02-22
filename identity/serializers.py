@@ -71,3 +71,21 @@ class UserPasswordLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError(str(e))
 
         return attrs
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the user profile.
+
+    Attributes:
+    - model (User): The User model class.
+    - fields (list): The fields to include in the serialized output.
+
+    Example:
+    To serialize user profile data, create an instance of this serializer with a User instance.
+    The serialized data will include 'first_name', 'last_name', 'email', and 'username' fields.
+    """
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username']

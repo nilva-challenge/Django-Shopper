@@ -6,4 +6,7 @@ urlpatterns = [
     path('email/password/',
          UserPasswordLoginView.as_view(), name="password_login"),
 
+    path('profile/',
+         UserProfileView.as_view(), name="profile"),
+
 ]
