@@ -1,56 +1,20 @@
 from django.urls import reverse
+from django.http import HttpResponseRedirect
+
 from rest_framework import generics, status
 from rest_framework.response import Response
-from django.http import HttpResponseRedirect
-from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny
+
+from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
-from rest_framework_simplejwt.views import TokenObtainPairView
+
+from rest_framework.authtoken.models import Token
 
 from .serializers import *
 
 User = get_user_model()
 
 # Authentication Views
-
-
-class CustomTokenObtainPairView(TokenObtainPairView):
-    """
-    Custom view for obtaining an access and refresh token pair.
-
-    Attributes:
-    - serializer_class: The serializer class for handling token obtainment (CustomTokenObtainPairSerializer).
-
-    Methods:
-    - post(request, *args, **kwargs) -> Response:
-        Handle the token obtainment POST request and return the validated token data.
-
-        Args:
-        - request (HttpRequest): The HTTP request object.
-        - *args: Additional arguments.
-        - **kwargs: Additional keyword arguments.
-
-        Returns:
-        - Response: JSON response containing the validated token data.
-    """
-
-    serializer_class = CustomTokenObtainPairSerializer
-
-    def post(self, request, *args, **kwargs) -> Response:
-        """
-        Handle the token obtainment POST request and return the validated token data.
-
-        Args:
-        - request (HttpRequest): The HTTP request object.
-        - *args: Additional arguments.
-        - **kwargs: Additional keyword arguments.
-
-        Returns:
-        - Response: JSON response containing the validated token data.
-        """
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
 class UserEmailLoginView(generics.CreateAPIView):
@@ -188,5 +152,6 @@ class UserPasswordLoginView(generics.CreateAPIView):
             except Exception as e:
                 return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        token = CacheManager.set_cache_token(user)
-        return Response({'token': str(token)}, status=status.HTTP_200_OK)
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response({'token': token.key}, status=status.HTTP_200_OK)
