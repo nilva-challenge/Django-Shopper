@@ -1,8 +1,7 @@
-from rest_framework import generics, views, status
+from rest_framework import generics, status
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 
 from .serializers import *
 
@@ -15,7 +14,6 @@ class ProductListCreateView(generics.ListCreateAPIView):
 
     Authentication is required to access this view.
     """
-    authentication_classes = [TokenAuthentication]
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
 
@@ -49,7 +47,6 @@ class OrderListCreateView(generics.ListCreateAPIView):
 
     serializer_class = OrderSerializer
     http_method_names = ["post", "get"]
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
 

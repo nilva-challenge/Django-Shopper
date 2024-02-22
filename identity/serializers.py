@@ -4,7 +4,6 @@ from django.core.validators import EmailValidator
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 
-from .custom_classes import CacheManager
 
 User = get_user_model()
 

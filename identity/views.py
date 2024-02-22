@@ -4,11 +4,13 @@ from django.http import HttpResponseRedirect
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 
+from dj_rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from rest_framework.authtoken.models import Token
 
 from .serializers import *
@@ -178,7 +180,6 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     This view requires Token Authentication for authentication and IsAuthenticated permission for access.
     """
 
-    authentication_classes = [TokenAuthentication]
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
@@ -191,3 +192,24 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
         """
         return self.request.user
 
+
+class GitHubLogin(SocialLoginView):
+    """
+    Custom API view for initiating GitHub OAuth2 login.
+
+    Attributes:
+    - adapter_class: The adapter class responsible for handling GitHub OAuth2 authentication.
+    - callback_url: The URL where GitHub will redirect after the user authorizes the app.
+    - client_class: The OAuth2 client class for GitHub authentication.
+
+    Example:
+    To initiate GitHub login, make a POST request to the endpoint.
+    The response will contain the GitHub OAuth2 authorization URL, which you can redirect the user to.
+
+    Note:
+    Ensure that the GitHub OAuth2 app credentials are properly configured in the Django project's settings.
+    """
+
+    adapter_class = GitHubOAuth2Adapter
+    callback_url = "localhost:8000"
+    client_class = OAuth2Client
