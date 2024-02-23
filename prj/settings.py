@@ -93,9 +93,10 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DEFAULT_DATABASE_ENGINE'),
         'NAME': os.environ.get('DEFAULT_DATABASE_NAME'),
-        'USER': os.environ.get('DEFAULT_DATABASE_USER'),
-        'PASSWORD': os.environ.get('DEFAULT_DATABASE_PASSWORD'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'PORT': os.environ.get('DEFAULT_DATABASE_PORT'),
+        'HOST': 'db',
     }
 }
 
@@ -135,6 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
