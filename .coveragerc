@@ -1,0 +1,6 @@
+[run]
+source = yourapp
+omit = */migrations/*
+
+[report]
+show_missing = true
